@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
+  <title>HealthCare Adviser</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
+  <link href="knjiznice/css/stil.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/demographics.css">
+
   <style>
-    body {padding-top: 70px;}
+    body {padding-top: 70px;
+    }
   </style>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
@@ -22,7 +26,7 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
+        <a class="navbar-brand" href="index.html">HealthCare Adviser</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
@@ -38,12 +42,137 @@
 
   <!-- ZAČETEK: Vsebina aplikacije -->
   <div class="container">
+    
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
+      
+      <div id="header" class="col-lg-12 text-center">
+        <font face="Lucida Handwriting" color="blue"><h1><strong>HealthCare Adviser</strong></h1></font>
       </div>
+      
+      
+    
+      
+      <div id="section">
+        <form id="input1">
+          <div class="row">
+            <div class="panel-body">
+              <h4>
+                <div class="panel panel-info">
+                  <div class="panel-heading">Dodaj osnovne podatke o pacientu: </div>
+                </div>
+                <span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="John">
+                <span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Smith">
+        				<span class="label label-default">Datum rojstva</span><input id="kreirajDatumRojstva" type="text" class="form-control" placeholder="1992-05-15T17:00">
+        				<button type="button" class="btn btn-primary btn-md" onclick="kreirajEHRzaBolnika()">Registriraj</button>
+              </h4>
+              <div class="panel panel-warning">
+                  <div class="panel-heading">EHR pacienta: <span id="dodatnoSporocilo"></span></div>
+              </div>
+              
+      			</div>
+          </div>
+        </form>
+      </div>
+   
+  <div class="container" style="margin-top: 20px;">
+  
+    <div class="well">
+        <div class="row">
+            <div class="demographics col-sm-6">
+               <h4></br></br>
+                 <div class="panel panel-primary">
+                    <div class="panel-heading">TRENUTNI PACIENT </div>
+                  </div>
+               </h4>
+               <h2>
+                 <div class="col-sm-6">
+                    <div class="demographics-label" style="color:#000000">Ime</div>
+                    <div class="demographics-data"><span id="name"></span></div>
+                 </div>
+                 <div class="col-sm-6">
+                    <div class="demographics-label" style="color:#000000">Starost</div>
+                    <div class="demographics-data"><span id="surname"></span></div>
+                 </div>
+                 <div class="col-sm-6">
+                    <div class="demographics-label" style="color:#000000">BPM</div>
+                    <div class="demographics-data"><span id="bpm"></span></div>
+                 </div>
+                 <div class="col-sm-6">
+                    <div class="demographics-label" style="color:#000000">SpO2</div>
+                    <div class="demographics-data"><span id="SpO2"></span></div>
+                 </div>
+                 <div class="col-sm-6">
+                    <div class="demographics-label" style="color:#000000">STANJE</div>
+                    <div class="demographics-data">------</div>
+                 </div>
+                </h2>
+            </div>
+        </div>
     </div>
+
+
+</div>
+
+    </div>
+    
+    <!-- ------------------------------------------------------------------------- -->
+    <div class="container">
+  <!--<h2>Dodaj meritve vitalnih znakov</h2>--->
+  </br>
+  <div class="panel-group">
+    <div class="panel panel-primary" >
+      <div class="panel-heading" >
+          <h3 class="panel-title">
+            <a data-toggle="collapse" href="#collapse1"><h4>Vpiši meritve vitalnih znakov</h4></a>
+          </h3>
+      </div>
+    </div>  
+    <div id="collapse1" class="panel-collapse collapse">
+      <div class="panel panel-info">
+        <div class="panel-heading">EHR Id</div>
+        <div class="panel-body"><span id="dodajVitalnoEHR"></span></div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">Datum in ura</div>
+        <div class="panel-body"><input id="dodajVitalnoDatumInUra" type="text" class="form-control" placeholder="2014-11-21T11:40Z"></div>
+      </div>
+  
+      <div class="panel panel-info">
+        <div class="panel-heading">Telesna višina</div>
+        <div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control" placeholder="185"><span class="input-group-addon">cm</span></div>
+      </div>
+  
+      <div class="panel panel-info">
+        <div class="panel-heading">Telesna teža</div>
+        <div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control" placeholder="80.00"><span class="input-group-addon">kg</span></div>
+      </div>
+  
+      <div class="panel panel-info">
+        <div class="panel-heading">Telesna temperatura</div>
+        <div class="input-group"><input id="dodajVitalnoTelesnaTemperatura" type="text" class="form-control" placeholder="36.50"><span class="input-group-addon">°C</span></div>
+      </div>
+  
+      <div class="panel panel-info">
+        <div class="panel-heading">Sistolični krvni tlak</div>
+        <div class="input-group"><input id="dodajVitalnoKrvniTlakSistolicni" type="text" class="form-control" placeholder="118"><span class="input-group-addon">mm Hg</span></div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">Diastolični krvni tlak</div>
+        <div class="input-group"><input id="dodajVitalnoKrvniTlakDiastolicni" type="text" class="form-control" placeholder="92"><span class="input-group-addon">mm Hg</span></div>
+      </div>
+       <div class="panel panel-info">
+        <div class="panel-heading">Nasičenost krvi s kisikom</div>
+        <div class="input-group"><input id="dodajVitalnoNasicenostKrviSKisikom" type="text" class="form-control" placeholder="98"><span class="input-group-addon">%</span></div>
+      </div>
+      <div class="panel panel-info">
+        <div class="panel-heading">Merilec</div>
+        <div class="panel-body"><input id="dodajVitalnoMerilec" type="text" class="form-control" placeholder="medicinska sestra Hrastova Micka"></div>
+      </div>  
+    </div>
+    <button type="button" class="btn btn-default btn-md" onclick="dodajMeritve()">Dodaj</button><span id="kreirajSporocilo1"></span>
   </div>
+</div>
+
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>

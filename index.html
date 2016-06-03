@@ -5,8 +5,6 @@
   <title>HealthCare Adviser</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
   <link href="knjiznice/css/stil.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/demographics.css">
-
   <style>
     body {padding-top: 70px;
     }
@@ -14,6 +12,139 @@
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script src="knjiznice/js/jsGraph.js"></script>
+  <script>
+  var chartData={
+    "type":"area",
+        "title":{
+            "text":"Sistolični in diastolični krvni tlak"
+        },
+        "plotarea":{
+            "margin-left":70
+        },
+        "scaleX":{
+            "min-value":40,
+            "max-value":100,
+            "step":1,
+            "max-labels":7,
+            "label":{
+                "text":"Diastolični tlak"
+            },
+            "guide":{
+                "line-style":"solid",
+                "line-color":"#000"
+            }
+        },
+        "scaleY":{
+            "values":"70:190:10",
+            "label":{
+                "text":"Sistolični tlak"
+            },
+            "guide":{
+                "line-style":"solid",
+                "line-color":"#000"
+            }
+        },
+        "plot":{
+            
+        },
+        "series":[
+            {
+                "type":"area",
+                "aspect":"stepped",
+                "values":[190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190,190],
+                "alpha-area":0.8,
+                "line-color":"red",
+                "line-width":0,
+                "background-color":"#123646",
+                "hover-state":{
+                    "visible":false
+                },
+                "marker":{
+                    "visible":false
+                },
+                "tooltip":{
+                    "visible":false
+                }
+            },
+            {
+                "type":"area",
+                "aspect":"stepped",
+                "values":[140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140],
+                "alpha-area":0.8,
+                "line-color":"yellow",
+                "line-width":0,
+                "background-color":"#1D6C8E",
+                "hover-state":{
+                    "visible":false
+                },
+                "marker":{
+                    "visible":false
+                },
+                "tooltip":{
+                    "visible":false
+                }
+            },
+            {
+                "type":"area",
+                "aspect":"stepped",
+                "values":[120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120],
+                "alpha-area":0.7,
+                "line-color":"green",
+                "line-width":0,
+                "background-color":"#3FC2FA",
+                "hover-state":{
+                    "visible":false
+                },
+                "marker":{
+                    "visible":false
+                },
+                "tooltip":{
+                    "visible":false
+                }
+            },
+            {
+                "type":"area",
+                "aspect":"stepped",
+                "values":[90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90],
+                "alpha-area":0.7,
+                "line-color":"purple",
+                "line-width":0,
+                "background-color":"#EAF2F6",
+                "hover-state":{
+                    "visible":false
+                },
+                "marker":{
+                    "visible":false
+                },
+                "tooltip":{
+                    "visible":false
+                }
+            },
+            {
+                "type":"scatter",
+                "line-width":0,
+                "alpha-area":0,
+                "marker":{
+                    "size":5,
+                    "background-color":"white"
+                },
+                "tooltip":{
+                    "text":"%v Systolic<br>%k Diastolic"
+                }
+            }
+        ]
+  };
+  window.onload=function(){  // Render Method[2]
+    zingchart.render({ 
+      id:'chartDiv',
+      data:chartData,
+      height:400,
+      width:600
+    });
+  };
+</script>
 </head>
 <body>
 
@@ -86,92 +217,97 @@
                </h4>
                <h2>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#000000">Ime</div>
-                    <div class="demographics-data"><span id="name"></span></div>
+                    <div class="demographics-label" style="color:#2A2F6E">Ime</div>
+                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="name"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#000000">Starost</div>
-                    <div class="demographics-data"><span id="surname"></span></div>
+                    <div class="demographics-label" style="color:#2A2F6E">Datum rojstva</div>
+                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="starost"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#000000">BPM</div>
-                    <div class="demographics-data"><span id="bpm"></span></div>
+                    <div class="demographics-label" style="color:#2A2F6E">BMI</div>
+                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="bmi"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#000000">SpO2</div>
-                    <div class="demographics-data"><span id="SpO2"></span></div>
+                    <div class="demographics-label" style="color:#2A2F6E">SpO2</div>
+                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="SpO2"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#000000">STANJE</div>
-                    <div class="demographics-data">------</div>
+                    <div class="demographics-label" style="color:#2A2F6E">STANJE</div>
+                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"></div>
                  </div>
                 </h2>
             </div>
         </div>
     </div>
+ </div>
 
-
-</div>
-
-    </div>
-    
-    <!-- ------------------------------------------------------------------------- -->
-    <div class="container">
-  <!--<h2>Dodaj meritve vitalnih znakov</h2>--->
-  </br>
-  <div class="panel-group">
-    <div class="panel panel-primary" >
-      <div class="panel-heading" >
-          <h3 class="panel-title">
-            <a data-toggle="collapse" href="#collapse1"><h4>Vpiši meritve vitalnih znakov</h4></a>
-          </h3>
-      </div>
-    </div>  
-    <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel panel-info">
-        <div class="panel-heading">EHR Id</div>
-        <div class="panel-body"><span id="dodajVitalnoEHR"></span></div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel-heading">Datum in ura</div>
-        <div class="panel-body"><input id="dodajVitalnoDatumInUra" type="text" class="form-control" placeholder="2014-11-21T11:40Z"></div>
-      </div>
-  
-      <div class="panel panel-info">
-        <div class="panel-heading">Telesna višina</div>
-        <div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control" placeholder="185"><span class="input-group-addon">cm</span></div>
-      </div>
-  
-      <div class="panel panel-info">
-        <div class="panel-heading">Telesna teža</div>
-        <div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control" placeholder="80.00"><span class="input-group-addon">kg</span></div>
-      </div>
-  
-      <div class="panel panel-info">
-        <div class="panel-heading">Telesna temperatura</div>
-        <div class="input-group"><input id="dodajVitalnoTelesnaTemperatura" type="text" class="form-control" placeholder="36.50"><span class="input-group-addon">°C</span></div>
-      </div>
-  
-      <div class="panel panel-info">
-        <div class="panel-heading">Sistolični krvni tlak</div>
-        <div class="input-group"><input id="dodajVitalnoKrvniTlakSistolicni" type="text" class="form-control" placeholder="118"><span class="input-group-addon">mm Hg</span></div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel-heading">Diastolični krvni tlak</div>
-        <div class="input-group"><input id="dodajVitalnoKrvniTlakDiastolicni" type="text" class="form-control" placeholder="92"><span class="input-group-addon">mm Hg</span></div>
-      </div>
-       <div class="panel panel-info">
-        <div class="panel-heading">Nasičenost krvi s kisikom</div>
-        <div class="input-group"><input id="dodajVitalnoNasicenostKrviSKisikom" type="text" class="form-control" placeholder="98"><span class="input-group-addon">%</span></div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel-heading">Merilec</div>
-        <div class="panel-body"><input id="dodajVitalnoMerilec" type="text" class="form-control" placeholder="medicinska sestra Hrastova Micka"></div>
+ </div>
+      <!-- ------------------------------------------------------------------------- -->
+  <div class="container">
+    <!--<h2>Dodaj meritve vitalnih znakov</h2>--->
+    </br>
+    <div class="panel-group col-lg-6">
+      <div class="panel panel-primary" >
+        <div class="panel-heading" >
+            <h3 class="panel-title">
+              <a data-toggle="collapse" href="#collapse1"><h4>Vpiši meritve vitalnih znakov</h4></a>
+            </h3>
+        </div>
       </div>  
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel panel-info">
+          <div class="panel-heading">EHR Id</div>
+          <div class="panel-body"><span id="dodajVitalnoEHR"></span></div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">Datum in ura</div>
+          <div class="panel-body"><input id="dodajVitalnoDatumInUra" type="text" class="form-control" placeholder="2014-11-21T11:40Z"></div>
+        </div>
+    
+        <div class="panel panel-info">
+          <div class="panel-heading">Telesna višina</div>
+          <div class="input-group"><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control" placeholder="185"><span class="input-group-addon">cm</span></div>
+        </div>
+    
+        <div class="panel panel-info">
+          <div class="panel-heading">Telesna teža</div>
+          <div class="input-group"><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control" placeholder="80.00"><span class="input-group-addon">kg</span></div>
+        </div>
+    
+        <div class="panel panel-info">
+          <div class="panel-heading">Telesna temperatura</div>
+          <div class="input-group"><input id="dodajVitalnoTelesnaTemperatura" type="text" class="form-control" placeholder="36.50"><span class="input-group-addon">°C</span></div>
+        </div>
+    
+        <div class="panel panel-info">
+          <div class="panel-heading">Sistolični krvni tlak</div>
+          <div class="input-group"><input id="dodajVitalnoKrvniTlakSistolicni" type="text" class="form-control" placeholder="118"><span class="input-group-addon">mm Hg</span></div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">Diastolični krvni tlak</div>
+          <div class="input-group"><input id="dodajVitalnoKrvniTlakDiastolicni" type="text" class="form-control" placeholder="92"><span class="input-group-addon">mm Hg</span></div>
+        </div>
+         <div class="panel panel-info">
+          <div class="panel-heading">Nasičenost krvi s kisikom</div>
+          <div class="input-group"><input id="dodajVitalnoNasicenostKrviSKisikom" type="text" class="form-control" placeholder="98"><span class="input-group-addon">%</span></div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading">Merilec</div>
+          <div class="panel-body"><input id="dodajVitalnoMerilec" type="text" class="form-control" placeholder="medicinska sestra Hrastova Micka"></div>
+        </div>  
+      </div>
+      <button type="button" class="btn btn-default btn-md" onclick="dodajMeritve()">Dodaj</button><span id="kreirajSporocilo1"></span>
     </div>
-    <button type="button" class="btn btn-default btn-md" onclick="dodajMeritve()">Dodaj</button><span id="kreirajSporocilo1"></span>
-  </div>
-</div>
+ 
+        <div class="panel-heading" >
+            <h3 class="panel-title">
+              <div id ='chartDiv'></div>
+            </h3>
+        </div>
+
+ </div>
+
 
   <!-- KONEC: Vsebina aplikacije -->
 

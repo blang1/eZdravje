@@ -110,7 +110,53 @@ function getAge(dateString)
 	var diastolicniKrvniTlak = $("#dodajVitalnoKrvniTlakDiastolicni").val();
 	var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
 	var merilec = $("#dodajVitalnoMerilec").val();
+	$("#bmi").text(parseFloat(calculateBMI(telesnaTeza, telesnaVisina)).toFixed(2));
+	
+	window.onload=function(){
+            zingchart.exec('chartDiv', 'addplot', {
+                data : {
+                    values : [[80, 100]],
+                    text : "My new plot"
+                }
+            });
+    };
+	var pressure = findRange(diastolicniKrvniTlak, sistolicniKrvniTlak);
+	console.log(pressure);
+	if (pressure!="normal"){
+		$.ajax({
+	    	     success: function(){
+    	            $.ajax({
+    	            	url: 'https://api.duckduckgo.com/?q='+pressure+'+blood+pressure&format=json&pretty=1',
+    	            	type: 'GET',
+    	            	dataType: 'jsonp',
+    	            	
+    	            	success: function(results){
+    	            		
+    	            		//for(var i=0; i<results.RelatedTopics.length; i++){
+    	            			
+    	            			$("#pritisok").append(results.RelatedTopics[0].Text);
+    	            		//}
+    	            	}
+    	            })
+    	        }
+    	    });
+	}else{
+		
+	}
+	// pressureOnGraph(diastolicniKrvniTlak, sistolicniKrvniTlak);
 
+	// zingchart.exec("chartDiv", "addplot", {
+	// 	"data":{
+ //               "values":[[80, 150]],
+ //      }
+          
+	// });
+	// zingchart.render({ 
+	// 	id : 'chartDiv', 
+	// 	data : chartData, 
+	// 	height: 400, 
+	// 	width: 600 
+	// });
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
       "label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
@@ -153,6 +199,37 @@ function getAge(dateString)
 		    }
 		});
 	}
+	
+	
+}
+
+function calculateBMI(weight, height){
+	
+	if(weight > 0 && height > 0){	
+		var finalBmi = weight/(height/100*height/100);
+	}
+	return finalBmi;
+}
+
+function findRange(d, s){
+	if(d<60 && s<90){
+		var pritisok = "low";
+	}else if(d>=60 && d<=80 && s>=90 && s<=120){
+		var pritisok = "normal";
+	}else if(d>80 && d<=90 && s>120 && s<=140){
+		var pritisok = "pre-high";
+	}else 
+		var pritisok = "high";
+		
+	return pritisok;
+}
+
+function dodajExample(){
+	$("#dodajVitalnoDatumInUra").text("1990-10-10T17:17");
+	$("#dodajVitalnoTelesnaVisina").text("185");
+	$("#dodajVitalnoTelesnaTeza").text("80");
+	$("#dodajVitalnoTelesnaTemperatura").text("37");
+	$("#dodajVitalnoKrvniTlakSistolicni").text("120");
 }
 
 /**
@@ -161,6 +238,7 @@ function getAge(dateString)
  * Filtriranje telesne temperature je izvedena z AQL poizvedbo, ki se uporablja
  * za napredno iskanje po zdravstvenih podatkih.
  */
+
 
 
 /**

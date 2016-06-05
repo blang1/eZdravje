@@ -4,8 +4,8 @@ var queryUrl = baseUrl + '/query';
 
 var username = "ois.seminar";
 var password = "ois4fri";
-
-
+window.rezultati1 = new Array(4);
+window.rezultati2 = new Array(4);
 /**
  * Prijava v sistem z privzetim uporabnikom za predmet OIS in pridobitev
  * enolične ID številke za dostop do funkcionalnosti
@@ -111,17 +111,10 @@ function getAge(dateString)
 	var nasicenostKrviSKisikom = $("#dodajVitalnoNasicenostKrviSKisikom").val();
 	var merilec = $("#dodajVitalnoMerilec").val();
 	$("#bmi").text(parseFloat(calculateBMI(telesnaTeza, telesnaVisina)).toFixed(2));
-	
-	window.onload=function(){
-            zingchart.exec('chartDiv', 'addplot', {
-                data : {
-                    values : [[80, 100]],
-                    text : "My new plot"
-                }
-            });
-    };
+	$("#SpO2").text(nasicenostKrviSKisikom);
+
 	var pressure = findRange(diastolicniKrvniTlak, sistolicniKrvniTlak);
-	console.log(pressure);
+	$("#stanje").text(pressure+" blood pressure");
 	if (pressure!="normal"){
 		$.ajax({
 	    	     success: function(){
@@ -131,17 +124,17 @@ function getAge(dateString)
     	            	dataType: 'jsonp',
     	            	
     	            	success: function(results){
-    	            		
-    	            		//for(var i=0; i<results.RelatedTopics.length; i++){
+    	            		$("#pritisok").empty();
+    	            		for(var i=0; i<results.RelatedTopics.length; i++){
     	            			
-    	            			$("#pritisok").append(results.RelatedTopics[0].Text);
-    	            		//}
+    	            			$("#pritisok").append(results.RelatedTopics[i].Result);
+    	            		}
     	            	}
     	            })
     	        }
     	    });
 	}else{
-		
+		$("#pritisok").append("Vaš tlak je normalan! Keep workin!")
 	}
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
@@ -210,23 +203,6 @@ function findRange(d, s){
 	return pritisok;
 }
 
-function dodajExample(){
-	$("#dodajVitalnoDatumInUra").text("1990-10-10T17:17");
-	$("#dodajVitalnoTelesnaVisina").text("185");
-	$("#dodajVitalnoTelesnaTeza").text("80");
-	$("#dodajVitalnoTelesnaTemperatura").text("37");
-	$("#dodajVitalnoKrvniTlakSistolicni").text("120");
-}
-
-/**
- * Pridobivanje vseh zgodovinskih podatkov meritev izbranih vitalnih znakov
- * (telesna temperatura, filtriranje telesne temperature in telesna teža).
- * Filtriranje telesne temperature je izvedena z AQL poizvedbo, ki se uporablja
- * za napredno iskanje po zdravstvenih podatkih.
- */
-
-
-
 /**
  * Generator podatkov za novega pacienta, ki bo uporabljal aplikacijo. Pri
  * generiranju podatkov je potrebno najprej kreirati novega pacienta z
@@ -279,11 +255,17 @@ function generirajPodatke(stPacienta) {
 	            success: function (party) {
 	                if (party.action == 'CREATE') {
 	                    if(stPacienta == 1){
-							$("#prviPacient").val(ehrId);
+							$("#prviPacient").html(ehrId);
+							dodajDrugeVitalneZnake("1",ehrId);
+							preberiVitalnePodatke(ehrId);
 						}else if(stPacienta == 2){
-							$("#drugiPacient").val(ehrId);
+							$("#drugiPacient").html(ehrId);
+							dodajDrugeVitalneZnake("2", ehrId);
+							//preberiVitalnePodatke(ehrId);
 						}else if(stPacienta == 3){
-							$("#tretiPacient").val(ehrId);
+							$("#tretiPacient").html(ehrId);
+							dodajDrugeVitalneZnake("3", ehrId);
+							//preberiVitalnePodatke(ehrId);
 						}
 						                }
 	            },
@@ -292,21 +274,189 @@ function generirajPodatke(stPacienta) {
 	        });
 	    }
 	});
-	
-
-  return ehrId;
 }
 
 function generirajPacientovGumb(){
-	$("#prviPacient").val(generirajPodatke("1"));
-	$("#drugiPacient").val(generirajPodatke("2"));
-	$("#tretiPacient").val(generirajPodatke("3"));
+	generirajPodatke("1");
+	generirajPodatke("2");
+	generirajPodatke("3");
+}
+function dodajDrugeVitalneZnake(stPacienta, ehrId) {
+	var sessionId = getSessionId();
+	
+	var data = new Array(4);
+	var sistolicen = new Array(4);
+	var diastolicen = new Array(4);
+	var visina = new Array(4);
+	var temperatura = new Array(4);
+	var tezina = new Array(4);
+	//console.log(ehrId);
 
-	document.getElementById("error7").innerHTML = "Generiranje pacientov je bilo uspešno";
-	document.getElementById("error7").style.color = "blue";
+	
+	if(stPacienta=="1"){
+			data[0] = "2013-5-13T10:10";
+			data[1] = "2014-5-1T12:27";
+			data[2] = "2015-10-28T23:30";
+			data[3] = "2016-1-1T13:17";
+			diastolicen[0] = 60;
+			diastolicen[1] = 80;
+			diastolicen[2] = 90;
+			diastolicen[3] = 66;
+			sistolicen[0] = 90;
+			sistolicen[1] = 126;
+			sistolicen[2] = 130;
+			sistolicen[3] = 100;
+			visina[0] = 180;
+			visina[1] = 181;
+			visina[2] = 189;
+			visina[3] = 190;
+			temperatura[0] = 36;
+			temperatura[1] = 37.5;
+			temperatura[2] = 36,7;
+			temperatura[3] = 40;
+			tezina[0] = 100;
+			tezina[1] = 70;
+			tezina[2] = 120;
+			tezina[3] = 85;
+	}if(stPacienta=="2"){
+			data[0] = "2013-5-13T10:10";
+			data[1] = "2014-5-1T12:27";
+			data[2] = "2015-10-28T23:30";
+			data[3] = "2016-1-1T13:17";
+			diastolicen[0] = 80;
+			diastolicen[1] = 70;
+			diastolicen[2] = 65;
+			diastolicen[3] = 75;
+			sistolicen[0] = 130;
+			sistolicen[1] = 200;
+			sistolicen[2] = 186;
+			sistolicen[3] = 190;
+			visina[0] = 190;
+			visina[1] = 195;
+			visina[2] = 192;
+			visina[3] = 200;
+			temperatura[0] = 37;
+			temperatura[1] = 35;
+			temperatura[2] = 35,7;
+			temperatura[3] = 43;
+			tezina[0] = 130;
+			tezina[1] = 70;
+			tezina[2] = 100;
+			tezina[3] = 90;
+}else if(stPacienta=="3"){
+			data[0] = "2013-5-13T10:10";
+			data[1] = "2014-5-1T12:27";
+			data[2] = "2015-10-28T23:30";
+			data[3] = "2016-1-1T13:17";
+			diastolicen[0] = 70;
+			diastolicen[1] = 55;
+			diastolicen[2] = 57;
+			diastolicen[3] = 68;
+			sistolicen[0] = 93;
+			sistolicen[1] = 80;
+			sistolicen[2] = 140;
+			sistolicen[3] = 100;
+			visina[0] = 160;
+			visina[1] = 162;
+			visina[2] = 180;
+			visina[3] = 182;
+			temperatura[0] = 35;
+			temperatura[1] = 42;
+			temperatura[2] = 36;
+			temperatura[3] = 38,5;
+			tezina[0] = 60;
+			tezina[1] = 70;
+			tezina[2] = 55;
+			tezina[3] = 76;
+}
+	
+	for(var i = 0; i < 4; i++) {
+		 $.ajaxSetup({
+		    headers: {"Ehr-Session": sessionId}
+		});
+		
+		var podatki = {
+		    "ctx/language": "en",
+		    "ctx/territory": "SI",
+		    "ctx/time": data[i],
+		    "vital_signs/height_length/any_event/body_height_length": visina[i],
+		    "vital_signs/body_weight/any_event/body_weight": tezina[i],
+		   	"vital_signs/body_temperature/any_event/temperature|magnitude": temperatura[i],
+		    "vital_signs/body_temperature/any_event/temperature|unit": "°C",
+		    "vital_signs/blood_pressure/any_event/systolic": sistolicen[i],
+		    "vital_signs/blood_pressure/any_event/diastolic": diastolicen[i]
+		};
+		
+		var parameters = {
+		    ehrId: ehrId,
+		    templateId: 'Vital Signs',
+		    format: 'FLAT',
+		    committer: 'Someone'
+		};
+		
+		$.ajax({
+		    url: baseUrl + "/composition?" + $.param(parameters),
+		    type: 'POST',
+		    contentType: 'application/json',
+		    data: JSON.stringify(podatki),
+		    async: false 
+		});
+	}	
 	
 }
 
+// function preberiVitalnePodatke(ehrId){
+// 	sessionId = getSessionId();
+
+// 	console.log(ehrId);
+	
+// 	if (ehrId){
+// 		$.ajax({
+// 			url: baseUrl + "/demographics/ehr/" + ehrId + "/party",
+// 	    	type: 'GET',
+// 	    	headers: {"Ehr-Session": sessionId},
+// 	    	success: function (data) {
+// 				var party = data.party;
+// 				$("#name").html(party.frirstNames+" "+party.lastNames);
+
+// 				$.ajax({
+//   				    url: baseUrl + "/view/" + ehrId + "/" + "blood_pressure",
+// 				    type: 'GET',
+// 				    headers: {"Ehr-Session": sessionId},
+// 				    success: function (res) {
+// 				    	if (res.length > 0) {
+// 					        for (var i in res) {
+// 					            window.rezultati1[i]=res[i].systolic;
+// 					        }
+// 				    	}
+// 				    },
+// 				    error: function() {
+// 				    }
+// 				});
+
+// 				$.ajax({
+// 				    url: baseUrl + "/view/" + ehrId + "/" + "blood_pressure",
+// 				    type: 'GET',
+// 				    headers: {"Ehr-Session": sessionId},
+// 				    success: function (res) {
+// 				    	if (res.length > 0) {
+// 					        for (var i in res) {
+// 					            window.rezultati2[i]=res[i].diastolic;
+// 					        }
+// 				    	} 
+// 				    },
+// 				    error: function() {
+// 				    }
+// 				});
+// 	    	},
+// 	    	error: function(err) {
+// 	    	}
+// 		});
+// 	}
+// 	// for(var j in rezultati2)
+// 	// 	console.log("toa-> "+rezultati2[j]);
+	
+// }
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikaci
 //-----------WHAT TO DO--------------------------------------------------------------------------

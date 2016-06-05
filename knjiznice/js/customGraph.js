@@ -106,7 +106,78 @@
         ]
         
   };
+zingchart.THEME="classic";
+var colors = {
+    gray : "#EBEBEB",
+    
+    grayDark : "#3F3F3F"
+};
+ 
+ 
+function randomVal(min, max, num){
+    var aData = [];
+    for(var i = 0 ; i < num; i++){
+        var val = ((Math.random() * (max-min)) + min);
+        aData.push(parseInt(val));
+    }
+    return aData;
+}
+ 
+zingchart.THEME="classic";
+var colors = {
+    gray : "#EBEBEB",
+    
+    grayDark : "#3F3F3F"
+};
 
+
+function randomVal(min, max, num){
+    var aData = [];
+    for(var i = 0 ; i < num; i++){
+        var val = ((Math.random() * (max-min)) + min);
+        aData.push(parseInt(val));
+    }
+    return aData;
+}
+
+var myConfig = {
+    type : 'area',
+    backgroundColor : "#FFF",
+
+    plot : {
+        aspect : 'spline',
+        lineColor : "rgba(151,187,205,1)",
+        lineWidth : "2px",
+        backgroundColor2 : "rgba(151,187,205,1)",
+        marker : {
+            backgroundColor : "rgba(151,187,205,1)",
+            borderColor : "white",
+            shadow : false
+        }
+    },
+    plotarea : {
+        backgroundColor : "white"
+    },
+    scaleX : {
+      lineColor : colors.gray,
+      lineWidth : "1px",
+    },
+    scaleY : {
+      lineColor : colors.gray,
+      lineWidth : "1px",
+      step:10,
+      tick : {
+          lineColor : "#C7C7C7",
+          lineWidth : "1px"
+      },
+      item : {
+          color: colors.grayDark
+      }
+    },
+    series : [
+        
+    ]
+}
    window.onload=function(){// Render Method[2]
    $("#stanjeTlaka").bind('click', function() {
 	zingchart.exec("chartDiv", "addplot", {
@@ -125,5 +196,27 @@
       height:400,
       width:600
     });
+   $("#narisiPodatke").bind('click', function() {
+       zingchart.exec("myChart", "appendseriesdata", {
+		"data":[{
+			
+            values : [70, 55, 57, 68]
+        
+		},
+		{
+            values : [60, 80, 99, 66]
+        },
+        {
+            values : [80, 70, 65, 75]
+        }
+		]
+	});
+   });
+    zingchart.render({
+        id : 'myChart',
+        data : myConfig,
+        hideprogresslogo : true,
+        height : 400
+    })
    };
 

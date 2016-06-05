@@ -11,9 +11,19 @@
   </style>
   <script src="knjiznice/js/jquery-2.2.3.min.js"></script>
   <script src="knjiznice/js/bootstrap.min.js"></script>
-  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <!--<script src="knjiznice/js/glavniGraph.js"></script>-->
+  <!--<script src="knjiznice/js/glavniGraph.js"></script>-->
   <script src="knjiznice/js/customGraph.js"></script>
+  <style>
+	    #myChart{
+	        padding:10px;
+	    }
+	    #myChart-top{
+	        box-shadow : 10px 10px 5px -4px rgba(224,224,224,0.6);
+	    }
+	</style>
 </head>
 <body>
 
@@ -26,7 +36,7 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">HealthCare Adviser</a>
+        <a class="navbar-brand" href="index.html">HealthCare Informator</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
@@ -46,7 +56,7 @@
     <div class="row">
       
       <div id="header" class="col-lg-12 text-center">
-        <font face="Libre Baskerville Regular" color="#0000"><h1><strong>HealthCare Adviser</strong></h1></font>
+        <font face="Calibri" color="#0000"><h1><strong>HealthCare Informator</strong></h1></font>
       </div>
       
       <div id="section">
@@ -80,28 +90,28 @@
                     <div class="panel-heading">TRENUTNI PACIENT </div>
                   </div>
                </h4>
-               <h2>
+               <h3>
                  <div class="col-sm-6">
                     <div class="panel-heading" style="color:#2A2F6E">Ime</div>
-                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="name" size="3"></span></div>
+                    <div class="panel-body" style="outline-style: dotted; outline-color: #76AEE5"><span id="name" size="3"></span></div>
                  </div>
                  <div class="col-sm-6">
                     <div class="panel-heading" style="color:#2A2F6E">Datum rojstva</div>
-                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="starost" ></span></div>
+                    <div class="panel-body" style="outline-style: dotted; outline-color: #76AEE5"><span id="starost" ></span></div>
                  </div>
                  <div class="col-sm-6">
                     <div class="panel-heading" style="color:#2A2F6E">BMI</div>
-                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="bmi"></span></div>
+                    <div class="panel-body" style="outline-style: dotted; outline-color: #76AEE5"><span id="bmi"></span></div>
                  </div>
                  <div class="col-sm-6">
                     <div class="panel-heading" style="color:#2A2F6E">SpO2</div>
-                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="SpO2"></span></div>
+                    <div class="panel-body" style="outline-style: dotted; outline-color: #76AEE5"><span id="SpO2"></span></div>
                  </div>
                  <div class="col-sm-6">
                     <div class="panel-heading" style="color:#2A2F6E">STANJE</div>
-                    <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"></div>
+                    <div class="panel-body" style="outline-style: dotted; outline-color: #76AEE5"><span id="stanje"></span></div>
                  </div>
-                </h2>
+                </h3>
             </div>
         </div>
  </div>      <!-- ------------------------------------------------------------------------- -->
@@ -160,6 +170,10 @@
         <span id="kreirajSporocilo1"></span>
 
       </div>
+      <div id='chartDiv'></div>
+      <button class="btn btn-info" id="stanjeTlaka">Poiščite stanje vašega tlaka</button>						
+      
+      <br><br>
       <div class="col-lg-6">
         <div class="panel panel-primary" >
           <div class="panel-heading" >
@@ -168,22 +182,33 @@
               </h3>
           </div>
         </div>
-        <input id="prviPacient" type="text" class="form-control">
-        <input id="drugiPacient" type="text" class="form-control" >
-        <input id="tretiPacient" type="text" class="form-control">
-      </div>
+        <a id="prvoto"><div class="panel-heading" style="border: 1px solid blue;"><span id="prviPacient"></div></a>
+        <a><div class="panel-heading" style="border: 1px solid blue;"><span id="drugiPacient"></div></a>
+        <a><div class="panel-heading" style="border: 1px solid blue;"><span id="tretiPacient"></div><a>
+
+      </div></a>
       <button class="btn btn-info" id="stanjeTlaka" onclick="generirajPacientovGumb()">Generiraj pacientov</button>
-      <div id='chartDiv'></div>
-      <button class="btn btn-info" id="stanjeTlaka">Poiščite stanje vašega tlaka</button>
+      <div class="container">
+        <form role="form">
+          <label class="radio-inline">
+            <input type="radio" id="Sistolicni">Sistolični krvni tlak
+          </label>
+           <label class="radio-inline">
+            <input type="radio" id="Diastolicni">Diastolični krvni tlak
+          </label>
+        <button class="btn btn-info" id="narisiPodatke">Nariši podatke na graf</button>
+      </div>
+      <div id='myChart'></div>
+      <zingchart id="myChart" zc-values="myValues" zc-json="myJson" style="width:100%; display:block;"></zingchart>
 
  </div>
-
-<div class="container">
-  <h2>Basic Panel</h2>
-  <div class="panel panel-default">
+  <div class="panel panel-primary" >
+    <div class="panel-heading" >
+        <h3 class="panel-title">
+        <h4>HealthCare Informator glede stanje vašega tlaka</h4></h3>
+    </div>
     <div class="panel-body" id="pritisok"></div>
   </div>
-</div>
 
   <!-- KONEC: Vsebina aplikacije -->
 

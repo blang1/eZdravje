@@ -175,7 +175,10 @@ var myConfig = {
       }
     },
     series : [
+        {
+			values : [70, 55, 57, 68]
         
+		}
     ]
 }
    window.onload=function(){// Render Method[2]
@@ -196,22 +199,7 @@ var myConfig = {
       height:400,
       width:600
     });
-   $("#narisiPodatke").bind('click', function() {
-       zingchart.exec("myChart", "appendseriesdata", {
-		"data":[{
-			
-            values : [70, 55, 57, 68]
-        
-		},
-		{
-            values : [60, 80, 99, 66]
-        },
-        {
-            values : [80, 70, 65, 75]
-        }
-		]
-	});
-   });
+
     zingchart.render({
         id : 'myChart',
         data : myConfig,

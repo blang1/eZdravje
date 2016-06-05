@@ -143,20 +143,6 @@ function getAge(dateString)
 	}else{
 		
 	}
-	// pressureOnGraph(diastolicniKrvniTlak, sistolicniKrvniTlak);
-
-	// zingchart.exec("chartDiv", "addplot", {
-	// 	"data":{
- //               "values":[[80, 150]],
- //      }
-          
-	// });
-	// zingchart.render({ 
-	// 	id : 'chartDiv', 
-	// 	data : chartData, 
-	// 	height: 400, 
-	// 	width: 600 
-	// });
 	if (!ehrId || ehrId.trim().length == 0) {
 		$("#dodajMeritveVitalnihZnakovSporocilo").html("<span class='obvestilo " +
       "label label-warning fade-in'>Prosim vnesite zahtevane podatke!</span>");
@@ -249,12 +235,76 @@ function dodajExample(){
  * @param stPacienta zaporedna številka pacienta (1, 2 ali 3)
  * @return ehrId generiranega pacienta
  */
+
 function generirajPodatke(stPacienta) {
-  ehrId = "";
-    
-  // TODO: Potrebno implementirati
+	var name1;
+	var name2;
+	var birth;
+	var ehrId;
+	if(stPacienta == 1){
+		name1 = "John";
+		name2 = "Smith";
+		birth = "1992-10-10";
+	}else if(stPacienta == 2){
+		name1 = "Daniel";
+		name2 = "Kostov";
+		birth = "1993-05-14";
+	}else if(stPacienta == 3){
+		name1 = "Jessica";
+		name2 = "Chastain";
+		birth = "1977-03-24";
+	}
+
+	var sessionId = getSessionId();
+
+	$.ajaxSetup({
+	    headers: {"Ehr-Session": sessionId}
+	});
+	$.ajax({
+	    url: baseUrl + "/ehr",
+	    type: 'POST',
+	    success: function (data) {
+	        var ehrId = data.ehrId;
+	        var partyData = {
+	            firstNames: name1,
+	            lastNames: name2,
+	            dateOfBirth: birth,
+	            partyAdditionalInfo: [{key: "ehrId", value: ehrId}]
+	        };
+	        $.ajax({
+	            url: baseUrl + "/demographics/party",
+	            type: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify(partyData),
+	            success: function (party) {
+	                if (party.action == 'CREATE') {
+	                    if(stPacienta == 1){
+							$("#prviPacient").val(ehrId);
+						}else if(stPacienta == 2){
+							$("#drugiPacient").val(ehrId);
+						}else if(stPacienta == 3){
+							$("#tretiPacient").val(ehrId);
+						}
+						                }
+	            },
+	            error: function(err) {
+	            }
+	        });
+	    }
+	});
+	
 
   return ehrId;
+}
+
+function generirajPacientovGumb(){
+	$("#prviPacient").val(generirajPodatke("1"));
+	$("#drugiPacient").val(generirajPodatke("2"));
+	$("#tretiPacient").val(generirajPodatke("3"));
+
+	document.getElementById("error7").innerHTML = "Generiranje pacientov je bilo uspešno";
+	document.getElementById("error7").style.color = "blue";
+	
 }
 
 

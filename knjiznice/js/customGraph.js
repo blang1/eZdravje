@@ -108,7 +108,7 @@
   };
 
    window.onload=function(){// Render Method[2]
-   $("#nesto").bind('click', function() {
+   $("#stanjeTlaka").bind('click', function() {
 	zingchart.exec("chartDiv", "addplot", {
 		"data":{
 			"values":[[parseInt($("#dodajVitalnoKrvniTlakDiastolicni").val()), parseInt($("#dodajVitalnoKrvniTlakSistolicni").val())]],

@@ -33,7 +33,7 @@
         <ul class="nav navbar-nav">
           <li><a href="opis.html">Opis ideje</a></li>
           <li><a href="nacrt.html">Načrt informacijske rešitve</a></li>
-          <li><a href="#">Generiranje podatkov</a></li>
+          <li><a href="#" onclick="generirajPacientovGumb()">Generiranje podatkov</a></li>
         </ul>
       </div>
     </div>
@@ -46,7 +46,7 @@
     <div class="row">
       
       <div id="header" class="col-lg-12 text-center">
-        <font face="Lucida Handwriting" color="blue"><h1><strong>HealthCare Adviser</strong></h1></font>
+        <font face="Libre Baskerville Regular" color="#0000"><h1><strong>HealthCare Adviser</strong></h1></font>
       </div>
       
       <div id="section">
@@ -71,41 +71,39 @@
         </form>
       </div>
    
-  <div class="container" style="margin-top: 20px;">
-  
+
     <div class="well">
         <div class="row">
             <div class="demographics col-sm-6">
-               <h4></br></br>
-                 <div class="panel panel-primary">
+               <h4></br>
+                 <div class="panel panel-info">
                     <div class="panel-heading">TRENUTNI PACIENT </div>
                   </div>
                </h4>
                <h2>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#2A2F6E">Ime</div>
+                    <div class="panel-heading" style="color:#2A2F6E">Ime</div>
                     <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="name" size="3"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#2A2F6E">Datum rojstva</div>
+                    <div class="panel-heading" style="color:#2A2F6E">Datum rojstva</div>
                     <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="starost" ></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#2A2F6E">BMI</div>
+                    <div class="panel-heading" style="color:#2A2F6E">BMI</div>
                     <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="bmi"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#2A2F6E">SpO2</div>
+                    <div class="panel-heading" style="color:#2A2F6E">SpO2</div>
                     <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"><span id="SpO2"></span></div>
                  </div>
                  <div class="col-sm-6">
-                    <div class="demographics-label" style="color:#2A2F6E">STANJE</div>
+                    <div class="panel-heading" style="color:#2A2F6E">STANJE</div>
                     <div class="panel-body" style="outline-style: dashed; outline-color: #76AEE5"></div>
                  </div>
                 </h2>
             </div>
         </div>
-    </div>
  </div>      <!-- ------------------------------------------------------------------------- -->
  <div class="container">
     <!--<h2>Dodaj meritve vitalnih znakov</h2>--->
@@ -156,15 +154,27 @@
         </div>
         <div class="panel panel-info">
           <div class="panel-heading">Merilec</div>
-          <div class="panel-body"><input id="dodajVitalnoMerilec" type="text" class="form-control" placeholder="medicinska sestra Hrastova Micka"></div>
+          <div class="panel-body"><input id="dodajVitalnoMerilec" type="text" class="form-control" placeholder="medicinska sestra Mojca"></div>
         </div>  
         <button type="button" class="btn btn-info" onclick="dodajMeritve() ">Dodaj</button>
         <span id="kreirajSporocilo1"></span>
 
       </div>
-      
+      <div class="col-lg-6">
+        <div class="panel panel-primary" >
+          <div class="panel-heading" >
+              <h3 class="panel-title">
+                <h4>Generiranje pacientov</h4>
+              </h3>
+          </div>
+        </div>
+        <input id="prviPacient" type="text" class="form-control">
+        <input id="drugiPacient" type="text" class="form-control" >
+        <input id="tretiPacient" type="text" class="form-control">
+      </div>
+      <button class="btn btn-info" id="stanjeTlaka" onclick="generirajPacientovGumb()">Generiraj pacientov</button>
       <div id='chartDiv'></div>
-      <button class="btn btn-info" id="nesto">Poiščite stanje vašega tlaka</button>
+      <button class="btn btn-info" id="stanjeTlaka">Poiščite stanje vašega tlaka</button>
 
  </div>
 
